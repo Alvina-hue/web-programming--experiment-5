@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f2f2f2;
+        }
+
+        h1 {
+            color: darkblue;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 200px);
+            gap: 15px;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 130px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 10px gray;
+        }
+
+        #slide {
+            width: 400px;
+            height: 250px;
+            max-width: 90%;
+            object-fit: cover;
+            border: 3px solid darkblue;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            background: darkblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Image Gallery</h1>
+
+    <div class="gallery">
+        <img src="butterfly.jpeg" onclick="showImage(0)" alt="Butterfly">
+        <img src="images.jpeg" onclick="showImage(1)" alt="Image 2">
+        <img src="img.jpeg" onclick="showImage(2)" alt="Image 3">
+        <img src="img2.jpeg" onclick="showImage(3)" alt="Image 4">
+    </div>
+
+    <h2>Slideshow</h2>
+
+    <img id="slide" src="nature.jpeg" alt="Slideshow Image">
+
+    <br><br>
+
+    <button onclick="previous()">Previous</button>
+    <button onclick="next()">Next</button>
+    <button onclick="play()">Auto Play</button>
+    <button onclick="stop()">Stop</button>
+
+    <script>
+        const images = [
+            "butterfly.jpeg",
+            "images.jpeg",
+            "img.jpeg",
+            "img2.jpeg"
+        ];
+
+        let index = 0;
+        let timer = null;
+
+        function showImage(i) {
+            index = i;
+            document.getElementById("slide").src = images[index];
+        }
+
+        function next() {
+            index = (index + 1) % images.length;
+            showImage(index);
+        }
+
+        function previous() {
+            index = (index - 1 + images.length) % images.length;
+            showImage(index);
+        }
+
+        function play() {
+            stop();
+            timer = setInterval(next, 2000);
+        }
+
+        function stop() {
+            if (timer !== null) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        // Start slideshow automatically
+        play();
+    </script>
+
+</body>
+</html>
